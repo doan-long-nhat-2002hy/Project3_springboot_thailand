@@ -35,7 +35,7 @@ public class BuildingController {
         item.setName("ACM Building");
         item.setAddress("130 quajng trujng");
         item.setNumberOfBasement(2L);
-        item.setManagerName("Anhy Long");
+        item.setManagerName("Anh Long Nhat");
         item.setManagerPhone("0808079087");
         item.setRentArea("100,200,300");
         responseList.add(item);
