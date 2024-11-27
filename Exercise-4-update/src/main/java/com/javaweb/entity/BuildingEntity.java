@@ -1,6 +1,7 @@
 package com.javaweb.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class BuildingEntity extends BaseEntity{
     @Column(name = "rentprice")
     private Integer rentprice;
     @Column(name = "rentpricedescription")
-    private String rentPriceDes;
+    private String priceDescription;
     @Column(name = "servicefee")
     private String serviceFee;
     @Column(name = "carfee")
@@ -52,7 +53,7 @@ public class BuildingEntity extends BaseEntity{
     @Column(name = "decorationtime")
     private String decorTime;
     @Column(name = "brokeragefee")
-    private Integer brokerageFee;
+    private BigDecimal brokerageFee;
     @Column(name = "type")
     private String typeCode;
     @Column(name = "note")
@@ -70,6 +71,28 @@ public class BuildingEntity extends BaseEntity{
             inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
     private List<UserEntity> userEntities = new ArrayList<>();
 
+    @OneToMany(mappedBy = "buildingEntity",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
+    private List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
+
+    public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
+        return assignmentBuildingEntities;
+    }
+
+    public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
+        this.assignmentBuildingEntities = assignmentBuildingEntities;
+    }
+
+    public List<RentAreaEntity> getRentAreaEntities() {
+        return rentAreaEntities;
+    }
+
+    public void setRentAreaEntities(List<RentAreaEntity> rentAreaEntities) {
+        this.rentAreaEntities = rentAreaEntities;
+    }
 
     public String getName() {
         return name;
@@ -151,12 +174,12 @@ public class BuildingEntity extends BaseEntity{
         this.rentprice = rentprice;
     }
 
-    public String getRentPriceDes() {
-        return rentPriceDes;
+    public String getPriceDescription() {
+        return priceDescription;
     }
 
-    public void setRentPriceDes(String rentPriceDes) {
-        this.rentPriceDes = rentPriceDes;
+    public void setPriceDescription(String priceDescription) {
+        this.priceDescription = priceDescription;
     }
 
     public String getServiceFee() {
@@ -239,11 +262,11 @@ public class BuildingEntity extends BaseEntity{
         this.decorTime = decorTime;
     }
 
-    public Integer getBrokerageFee() {
+    public BigDecimal getBrokerageFee() {
         return brokerageFee;
     }
 
-    public void setBrokerageFee(Integer brokerageFee) {
+    public void setBrokerageFee(BigDecimal brokerageFee) {
         this.brokerageFee = brokerageFee;
     }
 

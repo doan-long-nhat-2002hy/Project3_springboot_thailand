@@ -7,6 +7,7 @@ import com.javaweb.enums.TypeCode;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
+import com.javaweb.service.IBuildingService;
 import com.javaweb.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,31 +25,21 @@ public class BuildingController {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private IBuildingService buildingService;
+
     @GetMapping(value = "/admin/building-list")
     public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest, HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("admin/building/list");
+        //dđàu tieen chưa có giá trị gì, sau khi submit form thì có giá trị
         modelAndView.addObject("modelSearch", buildingSearchRequest);
-        // xuong db laay data
-        List<BuildingSearchResponse> responseList = new ArrayList<>();
-        BuildingSearchResponse item = new BuildingSearchResponse();
-        item.setId(3L);
-        item.setName("ACM Building");
-        item.setAddress("130 quajng trujng");
-        item.setNumberOfBasement(2L);
-        item.setManagerName("Anh Long Nhat");
-        item.setManagerPhone("0808079087");
-        item.setRentArea("100,200,300");
-        responseList.add(item);
-        BuildingSearchResponse item1 = new BuildingSearchResponse();
-        item1.setId(4L);
-        item1.setName("AC Building");
-        item1.setAddress("13 quang trung");
-        item1.setNumberOfBasement(6L);
-        item1.setManagerName("Anh Long");
-        item1.setManagerPhone("0808079");
-        item.setRentArea("100,200");
-        responseList.add(item1);
-        modelAndView.addObject("buildingList", responseList);
+
+        List<BuildingSearchResponse> res = buildingService.findAll(buildingSearchRequest);
+
+//        BuildingSearchResponse buildingSearchResponse = new BuildingSearchResponse();
+//        buildingSearchResponse.setListResult(res);
+//        buildingSearchResponse.setTotalItems(res.size());
+        modelAndView.addObject("buildingList", res);
         modelAndView.addObject("listStaffs", userService.getStaffs());
         modelAndView.addObject("districts", District.type());
         modelAndView.addObject("typecodes", TypeCode.type());
@@ -66,11 +57,7 @@ public class BuildingController {
     @GetMapping(value = "/admin/building-edit-{id}")
     public ModelAndView buildingEdit(@PathVariable("id") Long Id, HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("admin/building/edit");
-        //zuong db tim building theo id
-        BuildingDTO buildingDTO = new BuildingDTO();
-        buildingDTO.setId(Id);
-        buildingDTO.setName("asfd");
-        modelAndView.addObject("buildingEdit", buildingDTO);
+        modelAndView.addObject("buildingEdit", buildingService.findById(Id));
         modelAndView.addObject("districts", District.type());
         modelAndView.addObject("typecodes", TypeCode.type());
 
