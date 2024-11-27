@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 <c:url var="buildingURL" value="/admin/building-list"/>
 <c:url var="buildingAPI" value="/api/building"/>
 <html>
@@ -218,6 +219,8 @@
                                         </div>
                                         <div class="col-xs-12">
                                             <div class="col-xs-6">
+<%--                                                <a href="admin/building-list">--%>
+<%--</a>--%>
                                                 <button type="submit" id="btnSearchBuilding" class="btn btn-danger">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                          fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -261,6 +264,7 @@
         <!-- bảng danh sách -->
         <div class="row">
             <div class="col-xs-12">
+
                 <table id="tableList" style="margin: 3em 0 1.5em;"
                        class="table table-striped table-bordered table-hover">
                     <thead>
@@ -301,9 +305,9 @@
                             <td>${item.managerName}</td>
                             <td>${item.managerPhone}</td>
                             <td>${item.floorArea}</td>
+                            <td>${item.emptyArea}</td>
                             <td>${item.rentArea}</td>
-                            <td>${item.name}</td>
-                            <td>${item.name}</td>
+                            <td>${item.brokerageFee}</td>
 
                             <td>
                                 <div class="hidden-sm hidden-xs btn-group">
@@ -326,7 +330,53 @@
                             </td>
                         </tr>
                     </c:forEach>
+                    <%--                    <form:form modelAttribute="buildingList">--%>
+                    <%--                        <display:table name="${buildingList.listResult}" cellspacing="0" cellpadding="0"--%>
+                    <%--                                       requestURI="${buildingURL}" partialList="true" sort="external"--%>
+                    <%--                                       size="${buildingList.totalItems}" defaultorder="ascending" defaultsort="2"--%>
+                    <%--                                       id="tableList" pagesize="${buildingList.maxPageItems}"--%>
+                    <%--                                       export="false"--%>
+                    <%--                                       class="table table-fcv-ace table-striped table-bordered table-hover dataTable no-footer"--%>
+                    <%--                                       style="margin: 3em 0 1.5em;">--%>
+                    <%--                            <display:column title="<fieldset class='form-group'>--%>
+                    <%--                            <input type='checkbox' id='checkAll' class='check-box-element'>--%>
+                    <%--                            </fieldset>" class="center select-cell"--%>
+                    <%--                                            headerClass="center select-cell">--%>
+                    <%--                                <fieldset>--%>
+                    <%--                                    <input type="checkbox" name="checkList" value="${tableList.id}"--%>
+                    <%--                                           id="checkbox_${tableList.id}" class="check-box-element"/>--%>
+                    <%--                                </fieldset>--%>
+                    <%--                            </display:column>--%>
+                    <%--                            <display:column headerClass="text-left" property="name" title="Tên tòa nhà"/>--%>
+                    <%--                            <display:column headerClass="text-left" property="address" title="Địa chỉ"/>--%>
+                    <%--                            <display:column headerClass="text-left" property="numberOfBasement" title="Số tầng hầm"/>--%>
+                    <%--                            <display:column headerClass="text-left" property="managerName" title="Tên quản lý"/>--%>
+                    <%--                            <display:column headerClass="text-left" property="managerPhone"--%>
+                    <%--                                            title="Số điện thoại quản lý"/>--%>
+                    <%--                            <display:column headerClass="text-left" property="floorArea" title="D.Tích sàn"/>--%>
+                    <%--                            <display:column headerClass="text-left" property="emptyArea" title="D.Tích trống"/>--%>
+                    <%--                            <display:column headerClass="text-left" property="rentArea" title="D.Tích thuê"/>--%>
+                    <%--                            <display:column headerClass="text-left" property="brokerageFee" title="Phí môi giới"/>--%>
+                    <%--                            <display:column title="Thao tác" class="center">--%>
+                    <%--                                <div class="hidden-sm hidden-xs btn-group">--%>
+                    <%--                                    <button class="btn btn-xs btn-success" title="Giao toà nhà"--%>
+                    <%--                                            onclick="assignmentBuilding(${tableList.id})">--%>
+                    <%--                                        <i class="ace-icon fa fa-check bigger-120"></i>--%>
+                    <%--                                    </button>--%>
+                    <%--                                    <a class="btn btn-xs--%>
+                    <%--                                        btn-info" title="sua toa nha"--%>
+                    <%--                                       href="/admin/building-edit-${tableList.id}">--%>
+                    <%--                                        <i class="ace-icon fa fa-pencil bigger-120"></i>--%>
+                    <%--                                    </a>--%>
+                    <%--                                    <button class="btn btn-xs btn-danger"--%>
+                    <%--                                            onclick="deleteBuilding(${tableList.id})">--%>
+                    <%--                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>--%>
+                    <%--                                    </button>--%>
+                    <%--                                </div>--%>
+                    <%--                            </display:column>--%>
+                    <%--                        </display:table>--%>
 
+                    <%--                    </form:form>--%>
                     </tbody>
                 </table>
             </div>
@@ -371,7 +421,7 @@
 </div>
 <script>
     function assignmentBuilding(buildingId) {
-      console.log("Building ID: " + buildingId);
+        console.log("Building ID: " + buildingId);
         $('#assignmentBuildingModal').modal();
         loadStaff(buildingId);
         $('#buildingId').val(buildingId);
@@ -400,7 +450,7 @@
             },
             error: function (response) {
                 console.log("error");
-                window.location.href = "<c:url value= "/admin/building-list?message=error"/>";
+                window.location.href = "<c:url value= "/admin/building-list?message=errorrrl"/>";
                 console.log(response);
             }
         })
@@ -416,14 +466,14 @@
         }).get();
         data['staffs'] = staffs;
         // đoạn update checked
-        if(data['staffs'] != ''){
-          assignment(data);
+        if (data['staffs'] != '') {
+            assignment(data);
         }
         console.log("ok");
     })
 
-    function assignment(data){
-      $.ajax({
+    function assignment(data) {
+        $.ajax({
             type: "post", // hay dùng nhất
             url: "${buildingAPI}/" + 'assignment', // đường dẫn đến api
             data: JSON.stringify(data), // dữ liệu gửi lên server
