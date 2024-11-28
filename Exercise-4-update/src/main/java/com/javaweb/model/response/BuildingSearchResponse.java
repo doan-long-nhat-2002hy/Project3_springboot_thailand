@@ -3,7 +3,7 @@ package com.javaweb.model.response;
 
 import com.javaweb.model.dto.AbstractDTO;
 
-public class BuildingSearchResponse extends AbstractDTO {
+public class BuildingSearchResponse extends AbstractDTO<BuildingSearchResponse> {
 	private Long id;
 	private String createdDate;
 	private String name;
@@ -14,7 +14,7 @@ public class BuildingSearchResponse extends AbstractDTO {
 	private Long floorArea;
 	private String rentArea;
     private String emptyArea;
-    private Long rentPrice;
+    private Integer rentPrice;
     private String serviceFee;
     private Double brokerageFee;
 
@@ -59,10 +59,10 @@ public class BuildingSearchResponse extends AbstractDTO {
 	public void setEmptyArea(String emptyArea) {
 		this.emptyArea = emptyArea;
 	}
-	public Long getRentPrice() {
+	public Integer getRentPrice() {
 		return rentPrice;
 	}
-	public void setRentPrice(Long rentPrice) {
+	public void setRentPrice(Integer rentPrice) {
 		this.rentPrice = rentPrice;
 	}
 	public String getServiceFee() {
